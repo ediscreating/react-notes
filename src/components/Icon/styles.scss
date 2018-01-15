@@ -1,0 +1,24 @@
+@import '../../styles/colors.scss';
+
+.icon {
+  width: 15px;
+  height: 15px;
+
+  &_color {
+    &_mint {
+      fill: map-get($colors, mint);
+    }
+
+    &_light-grey {
+      fill: map-get($colors, light-grey);
+    }
+
+    &_mid-grey {
+      fill: map-get($colors, mid-grey);
+    }
+
+    &_white {
+      fill: white;
+    }
+  }
+}

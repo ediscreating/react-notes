@@ -1,0 +1,93 @@
+@import "../../styles/colors";
+
+@mixin raised-styles {
+  transform: scale(1.1);
+  box-shadow: 0 0 14px 0 rgba(92, 232, 192, 0.5);
+}
+
+@mixin pressed-styles {
+  transform: scale(1.02);
+  box-shadow: 0 0px 5px 0px rgba(92, 232, 192, 0.5);
+}
+
+.button {
+  min-height: 30px;
+  min-width: 100px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  color: map-get($colors, mint);
+  text-align: center;
+  transition: box-shadow 0.2s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    @include raised-styles;
+    background-color: map-get($colors, mint);
+    color: white;
+    cursor: pointer;
+
+    & .plus-btn__icon {
+      fill: white;
+    }
+  }
+
+  &:active {
+    @include pressed-styles;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  /*** Modifiers ***/
+
+  &_color {
+    &_mint {
+      background-color: map-get($colors, mint);
+      color: white;
+    }
+  }
+
+  &_focused {
+    @include raised-styles;
+    background-color: map-get($colors, mint);
+    outline: none;
+
+    & .plus-btn__icon {
+      fill: white;
+    }
+  }
+
+  &_pressed {
+    @include pressed-styles;
+  }
+
+  &_round {
+    min-height: 30px;
+    min-width: 30px;
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    border-radius: 100%;
+  }
+
+
+  /*** Elements ***/
+
+  &__label {
+    vertical-align: middle;
+  }
+
+  &__right-icon, &__left-icon, &__center-icon {
+    vertical-align: middle;
+  }
+
+  &__right-icon {
+    margin-left: 10px;
+  }
+
+  &__left-icon {
+    margin-right: 10px;
+  }
+}
