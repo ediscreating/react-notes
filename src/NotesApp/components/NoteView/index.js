@@ -6,6 +6,11 @@ class NoteView extends PureComponent {
     super(props);
 
     this.handleNoteChange = this.handleNoteChange.bind(this);
+    this.textarea = null;
+  }
+
+  focusTextArea() {
+    this.textarea.focus();
   }
 
   handleNoteChange(e) {
@@ -19,6 +24,7 @@ class NoteView extends PureComponent {
       <div className="notes__note-view">
         <textarea
           className="notes__note-edit"
+          ref={textarea => { this.textarea = textarea; }}
           value={this.props.noteValue}
           onChange={this.handleNoteChange}
         />

@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import NotesMenu from './components/NotesMenu';
 import NoteView from './components/NoteView';
 import Notes from './index.js';
 
 describe('Notes', () => {
-  function notes() {
+  function notes(useShallow = true) {
     function callHandler(wrapper, Component, prop, arg) {
       const handler = wrapper.find(Component).prop(prop);
       handler(arg);
@@ -13,7 +13,7 @@ describe('Notes', () => {
     }
 
     return {
-      wrapper: shallow(<Notes />),
+      wrapper: useShallow ? shallow(<Notes />) : mount(<Notes />),
       addNotes(notes) {
         notes.forEach(note => {
           this.addNote().changeNote(note);
@@ -100,4 +100,31 @@ describe('Notes', () => {
     expect(notesComponent.wrapper.find(NotesMenu).prop('selectedNoteIndex')).toBe(0);
     expect(notesComponent.wrapper.find(NotesMenu).prop('notes')).toEqual(['']);
   });
+
+  describe('calls focusTextArea method of NoteView', () => {
+    let notesComponent = null;
+    let spy = null;
+
+    beforeEach(() => {
+      notesComponent = notes(false);
+      const noteView = notesComponent.find(NoteView).instance();
+      spy = jest.spyOn(noteView, 'focusTextArea');
+    });
+
+    test('on note add', () => {
+      notesComponent.addNote();
+      expect(spy).toHaveBeenCalled();
+    });
+
+    test('on note select', () => {
+      notesComponent.selectNote(0);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    test('on note remove', () => {
+      notesComponent.removeNote(0);
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
 });

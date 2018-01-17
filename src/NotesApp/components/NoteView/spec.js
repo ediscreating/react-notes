@@ -21,4 +21,13 @@ describe('NoteView', () => {
     expect(fn.mock.calls).toHaveLength(1);
     expect(fn.mock.calls[0][0]).toBe('val');
   });
+
+  test('implements focusTextArea method', () => {
+    const wrapper = mount(<NoteView />);
+    const textarea = wrapper.find('textarea').instance();
+
+    wrapper.instance().focusTextArea();
+
+    expect(textarea === document.activeElement).toBeTruthy();
+  });
 });

@@ -16,6 +16,8 @@ class Notes extends Component {
     this.handleNoteRemoveBtnPress = this.handleNoteRemoveBtnPress.bind(this);
     this.handleNoteSelect = this.handleNoteSelect.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
+
+    this.noteView = null;
   }
 
   handleNoteChange(value) {
@@ -34,6 +36,8 @@ class Notes extends Component {
       selectedNoteIndex = selectedNoteIndex === 0 ? 0 : selectedNoteIndex - 1;
     }
 
+    if (this.noteView) this.noteView.focusTextArea();
+
     this.setState({
       notes,
       selectedNoteIndex
@@ -41,6 +45,10 @@ class Notes extends Component {
   }
 
   handleNoteSelect(index) {
+    if (this.noteView) {
+      this.noteView.focusTextArea();
+    }
+
     this.setState({
       selectedNoteIndex: index
     });
@@ -50,6 +58,10 @@ class Notes extends Component {
     const notes = this.state.notes.slice();
 
     notes.push('');
+
+    if (this.noteView) {
+      this.noteView.focusTextArea();
+    }
 
     this.setState({
       notes,
@@ -70,6 +82,7 @@ class Notes extends Component {
           onAddBtnPress={this.handleAddBtnPress}
         />
         <NoteView
+          ref={noteView => { this.noteView = noteView; }}
           noteValue={notes[selectedNoteIndex]}
           onNoteChange={this.handleNoteChange}
         />
